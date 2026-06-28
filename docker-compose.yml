@@ -1,0 +1,16 @@
+services:
+  backend:
+    image: shashanknadikatla/s3-explorer-backend:latest
+    ports:
+      - "8090:8090"
+    env_file:
+      - .env
+    restart: always
+
+  frontend:
+    image: shashanknadikatla/s3-explorer-frontend:latest
+    ports:
+      - "4176:80"
+    depends_on:
+      - backend
+    restart: always

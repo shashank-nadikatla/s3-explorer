@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   S3 EXPLORER · Design Tokens
+   Seed color: vivid coral (#FF5A5F)
+   Secondary: sage. Tertiary: warm amber. Neutral: warm gray.
+   ============================================================ */
+
+:root {
+  /* === Primary (coral) === */
+  --primary: oklch(0.64 0.197 22);
+  --primary-foreground: oklch(1 0 0);
+  --primary-container: oklch(0.91 0.06 22);
+  --on-primary-container: oklch(0.28 0.13 22);
+
+  /* === Secondary (sage) === */
+  --secondary: oklch(0.58 0.07 155);
+  --secondary-foreground: oklch(1 0 0);
+  --secondary-container: oklch(0.92 0.045 155);
+  --on-secondary-container: oklch(0.26 0.05 155);
+
+  /* === Tertiary (warm amber) === */
+  --tertiary: oklch(0.74 0.155 70);
+  --tertiary-foreground: oklch(0.22 0.05 70);
+  --tertiary-container: oklch(0.93 0.07 80);
+  --on-tertiary-container: oklch(0.3 0.09 60);
+
+  /* === Error === */
+  --error: oklch(0.58 0.22 27);
+  --error-container: oklch(0.92 0.05 25);
+  --on-error-container: oklch(0.3 0.13 27);
+
+  /* === Neutral surfaces (warm gray) === */
+  --background: oklch(0.985 0.006 40);
+  --foreground: oklch(0.18 0.012 40);
+  --surface: oklch(0.985 0.006 40);
+  --on-surface: oklch(0.18 0.012 40);
+  --surface-dim: oklch(0.92 0.01 40);
+  --surface-bright: oklch(0.995 0.005 40);
+  --surface-container-lowest: oklch(1 0 0);
+  --surface-container-low: oklch(0.975 0.008 40);
+  --surface-container: oklch(0.955 0.01 40);
+  --surface-container-high: oklch(0.93 0.012 40);
+  --surface-container-highest: oklch(0.905 0.014 40);
+  --surface-variant: oklch(0.92 0.015 35);
+  --on-surface-variant: oklch(0.42 0.018 40);
+  --inverse-surface: oklch(0.24 0.012 40);
+  --inverse-on-surface: oklch(0.96 0.006 40);
+
+  --outline: oklch(0.62 0.02 40);
+  --outline-variant: oklch(0.85 0.012 40);
+
+  --gradient-hero: radial-gradient(
+      120% 80% at 0% 0%,
+      oklch(0.91 0.06 22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(100% 80% at 100% 0%, oklch(0.93 0.07 80) 0%, transparent 60%),
+    radial-gradient(120% 100% at 50% 100%, oklch(0.92 0.045 155) 0%, transparent 60%),
+    oklch(0.99 0.005 40);
+}
+
+.dark {
+  --background: oklch(0.16 0.012 40);
+  --foreground: oklch(0.94 0.006 40);
+  --surface: oklch(0.16 0.012 40);
+  --on-surface: oklch(0.94 0.006 40);
+  --surface-dim: oklch(0.14 0.012 40);
+  --surface-bright: oklch(0.27 0.014 40);
+  --surface-container-lowest: oklch(0.12 0.012 40);
+  --surface-container-low: oklch(0.2 0.012 40);
+  --surface-container: oklch(0.22 0.013 40);
+  --surface-container-high: oklch(0.26 0.014 40);
+  --surface-container-highest: oklch(0.3 0.015 40);
+  --surface-variant: oklch(0.32 0.015 40);
+  --on-surface-variant: oklch(0.78 0.012 40);
+  --outline: oklch(0.6 0.018 40);
+  --outline-variant: oklch(0.35 0.014 40);
+  --inverse-surface: oklch(0.94 0.006 40);
+  --inverse-on-surface: oklch(0.22 0.013 40);
+
+  --primary: oklch(0.82 0.13 25);
+  --primary-foreground: oklch(0.25 0.12 22);
+  --primary-container: oklch(0.42 0.16 22);
+  --on-primary-container: oklch(0.94 0.05 22);
+
+  --gradient-hero: radial-gradient(
+      120% 80% at 0% 0%,
+      oklch(0.3 0.06 22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(100% 80% at 100% 0%, oklch(0.3 0.07 80) 0%, transparent 60%),
+    oklch(0.16 0.012 40);
+}
+
+@layer base {
+  * {
+    border-color: var(--outline-variant);
+  }
+  html,
+  body {
+    background: var(--background);
+    color: var(--on-surface);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Loading bar animation */
+@keyframes slideRight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+/* Material Symbols font utility */
+.sym {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
