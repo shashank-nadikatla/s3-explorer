@@ -2,6 +2,12 @@
 
 A web-based AWS S3 file explorer. Browse, preview, edit, upload, download, rename, and delete S3 objects.
 
+## Screenshots
+
+![Login](screenshots/login.png)
+
+![Browser](screenshots/root.png)
+
 ## Project Structure
 
 ```
