@@ -36,10 +36,13 @@ export function ContentPreview({
           <div className="truncate text-sm font-semibold">{fileName}</div>
           <div className="text-[11px] text-muted-foreground truncate">/{fileKey}</div>
         </div>
+        <IconButton icon="content_copy" onClick={() => {
+          if (content && content !== "__BINARY__") {
+            navigator.clipboard.writeText(content);
+          }
+        }} />
         <IconButton icon="download" onClick={onDownload} />
-        <Button variant="tonal" icon="edit" onClick={onEdit}>
-          Edit
-        </Button>
+        <IconButton icon="edit" onClick={onEdit} />
         <IconButton icon="close" onClick={onClose} />
       </div>
 

@@ -109,6 +109,15 @@ export default function BrowserPage() {
   };
 
   const handleFileClick = async (file: S3File) => {
+    const fileType = getFileType(file.name);
+    const binaryTypes: string[] = ["image", "video", "audio", "pdf", "zip"];
+
+    if (binaryTypes.includes(fileType)) {
+      // Binary files — download directly, no preview
+      handleDownload(file.key);
+      return;
+    }
+
     setPreviewName(file.name);
     setPreviewKey(file.key);
     setPreviewContent(null);
@@ -117,7 +126,10 @@ export default function BrowserPage() {
       setPreviewContent(result.content);
     } catch (err: any) {
       if (err.message?.includes("binary")) {
-        setPreviewContent("__BINARY__");
+        // Fallback: if server says binary, close preview and download
+        setPreviewKey(null);
+        setPreviewContent(null);
+        handleDownload(file.key);
       } else {
         setPreviewContent(`Error: ${err.message}`);
       }

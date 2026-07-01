@@ -30,8 +30,10 @@ export function TopAppBar({ prefix, loading, onMenu, onSearch, onDisconnect, onC
           <Icon name="cloud" size={18} />
         </div>
         <div className="min-w-0 hidden sm:block">
-          <div className="text-sm font-semibold leading-tight truncate">S3</div>
-          <div className="text-[10px] text-muted-foreground truncate">File Explorer</div>
+          <div className="text-sm font-semibold leading-tight truncate">S3 Explorer</div>
+          <div className="text-[10px] text-muted-foreground truncate">
+            {sessionStorage.getItem("s3_connection_name") || "Connected"}
+          </div>
         </div>
       </div>
 

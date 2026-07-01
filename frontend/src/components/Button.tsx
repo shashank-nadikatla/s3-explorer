@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: string;
   trailing?: string;
   full?: boolean;
+  loading?: boolean;
   children?: ReactNode;
 }
 
@@ -26,17 +27,24 @@ export function Button({
   icon,
   trailing,
   full,
+  loading,
   className = "",
+  disabled,
   ...rest
 }: ButtonProps) {
   return (
     <button
       {...rest}
+      disabled={disabled || loading}
       className={`inline-flex h-10 items-center justify-center gap-2 rounded-2xl px-5 text-sm font-medium transition-all disabled:opacity-50 disabled:pointer-events-none ${variantStyles[variant]} ${full ? "w-full" : ""} ${className}`}
     >
-      {icon && <Icon name={icon} size={18} />}
+      {loading ? (
+        <span className="h-4 w-4 border-2 border-current/30 border-t-current rounded-full animate-spin" />
+      ) : (
+        icon && <Icon name={icon} size={18} />
+      )}
       {children && <span>{children}</span>}
-      {trailing && <Icon name={trailing} size={18} />}
+      {trailing && !loading && <Icon name={trailing} size={18} />}
     </button>
   );
 }
@@ -44,16 +52,25 @@ export function Button({
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: string;
   size?: number;
+  loading?: boolean;
 }
 
-export function IconButton({ icon, size = 40, className = "", ...rest }: IconButtonProps) {
+export function IconButton({ icon, size = 40, className = "", loading, disabled, ...rest }: IconButtonProps) {
   return (
     <button
       {...rest}
+      disabled={disabled || loading}
       style={{ height: size, width: size }}
-      className={`grid place-items-center rounded-full hover:bg-surface-container transition-colors ${className}`}
+      className={`grid place-items-center rounded-full hover:bg-surface-container transition-colors disabled:opacity-50 ${className}`}
     >
-      <Icon name={icon} size={size * 0.5} />
+      {loading ? (
+        <span
+          className="border-2 border-current/30 border-t-current rounded-full animate-spin"
+          style={{ height: size * 0.4, width: size * 0.4 }}
+        />
+      ) : (
+        <Icon name={icon} size={size * 0.5} />
+      )}
     </button>
   );
 }

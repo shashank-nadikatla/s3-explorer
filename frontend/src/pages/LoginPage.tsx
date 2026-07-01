@@ -25,6 +25,7 @@ export default function LoginPage() {
   const [region, setRegion] = useState("");
   const [bucket, setBucket] = useState("");
   const [basePath, setBasePath] = useState("");
+  const [connectionName, setConnectionName] = useState("");
 
   useEffect(() => {
     api.getProfiles().then((data) => {
@@ -36,6 +37,7 @@ export default function LoginPage() {
     setSelectedProfile(profileName);
     setLoading(true);
     api.connectProfile(profileName).then(() => {
+      sessionStorage.setItem("s3_connection_name", profileName);
       toast.success(`Connected via profile: ${profileName}`);
       navigate("/");
     }).catch((err: any) => {
@@ -54,6 +56,7 @@ export default function LoginPage() {
         bucket_name: bucket.trim(),
         base_path: basePath.trim(),
       });
+      sessionStorage.setItem("s3_connection_name", connectionName.trim() || bucket.trim());
       toast.success(`Connected to ${bucket}`);
       navigate("/");
     } catch (err: any) {
@@ -104,13 +107,13 @@ export default function LoginPage() {
 
           <div className="flex items-center gap-6 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
-              <Icon name="verified" size={16} /> SOC 2
+              <Icon name="folder_open" size={16} /> Browse
             </span>
             <span className="flex items-center gap-1.5">
-              <Icon name="public_off" size={16} /> Zero telemetry
+              <Icon name="edit" size={16} /> Edit
             </span>
             <span className="flex items-center gap-1.5">
-              <Icon name="dark_mode" size={16} /> Adaptive
+              <Icon name="upload" size={16} /> Upload
             </span>
           </div>
         </div>
@@ -189,6 +192,13 @@ export default function LoginPage() {
 
             <div className="space-y-3">
               <TextField
+                label="Connection Name"
+                icon="label"
+                value={connectionName}
+                onChange={(e) => setConnectionName(e.target.value.slice(0, 12))}
+                maxLength={12}
+              />
+              <TextField
                 label="Access Key"
                 icon="key"
                 value={accessKey}
@@ -230,7 +240,7 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-6">
-              <Button icon="bolt" full type="submit" disabled={loading}>
+              <Button icon="bolt" full type="submit" disabled={loading} loading={loading}>
                 Connect bucket
               </Button>
             </div>

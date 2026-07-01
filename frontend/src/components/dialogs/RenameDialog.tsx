@@ -15,9 +15,11 @@ interface RenameDialogProps {
 
 export function RenameDialog({ name, fileKey, isFolder, prefix, onCancel, onConfirm }: RenameDialogProps) {
   const [newName, setNewName] = useState(name);
+  const [renaming, setRenaming] = useState(false);
 
   const handleSubmit = () => {
     if (!newName.trim() || newName === name) return;
+    setRenaming(true);
     let newKey: string;
     if (isFolder) {
       const oldPrefix = fileKey.endsWith("/") ? fileKey : fileKey + "/";
@@ -32,7 +34,7 @@ export function RenameDialog({ name, fileKey, isFolder, prefix, onCancel, onConf
   };
 
   return (
-    <Scrim onClose={onCancel}>
+    <Scrim onClose={!renaming ? onCancel : undefined}>
       <div className="w-full max-w-md rounded-3xl bg-surface-container-low p-6 shadow-elev-5">
         <div className="mb-4 flex items-center gap-3">
           <div className="grid h-12 w-12 place-items-center rounded-2xl bg-secondary-container text-secondary">
@@ -51,6 +53,7 @@ export function RenameDialog({ name, fileKey, isFolder, prefix, onCancel, onConf
           onChange={(e) => setNewName(e.target.value)}
           supporting="Use letters, numbers, dashes and dots."
           autoFocus
+          disabled={renaming}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         />
 
@@ -65,8 +68,8 @@ export function RenameDialog({ name, fileKey, isFolder, prefix, onCancel, onConf
         </div>
 
         <div className="mt-5 flex justify-end gap-2">
-          <Button variant="text" onClick={onCancel}>Cancel</Button>
-          <Button icon="check" onClick={handleSubmit} disabled={!newName.trim() || newName === name}>
+          <Button variant="text" onClick={onCancel} disabled={renaming}>Cancel</Button>
+          <Button icon="check" onClick={handleSubmit} disabled={!newName.trim() || newName === name} loading={renaming}>
             Rename
           </Button>
         </div>
